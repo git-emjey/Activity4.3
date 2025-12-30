@@ -44,12 +44,12 @@ const updateAllMaterials = () =>
  * Environment map
  */
 const environmentMap = cubeTextureLoader.load([
-    '/textures/environmentMap/px.jpg',
-    '/textures/environmentMap/nx.jpg',
-    '/textures/environmentMap/py.jpg',
-    '/textures/environmentMap/ny.jpg',
-    '/textures/environmentMap/pz.jpg',
-    '/textures/environmentMap/nz.jpg'
+    'static/textures/environmentMap/px.jpg',
+    'static/textures/environmentMap/nx.jpg',
+    'static/textures/environmentMap/py.jpg',
+    'static/textures/environmentMap/ny.jpg',
+    'static/textures/environmentMap/pz.jpg',
+    'static/textures/environmentMap/nz.jpg'
 ])
 
 environmentMap.encoding = THREE.sRGBEncoding
@@ -68,7 +68,7 @@ let fox_actions = {}
 let fox_current_action = null
 
 gltfLoader.load(
-    '/models/Fox/glTF/Fox.gltf',
+    'static/models/Fox/glTF/Fox.gltf',
     (gltf) =>
     {
         // Model
