@@ -17,6 +17,8 @@ const cubeTextureLoader = new THREE.CubeTextureLoader()
 const gui = new dat.GUI()
 const debugObject = {}
 
+const base_url = import.meta.env.BASE_URL
+
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
@@ -44,12 +46,12 @@ const updateAllMaterials = () =>
  * Environment map
  */
 const environmentMap = cubeTextureLoader.load([
-    'static/textures/environmentMap/px.jpg',
-    'static/textures/environmentMap/nx.jpg',
-    'static/textures/environmentMap/py.jpg',
-    'static/textures/environmentMap/ny.jpg',
-    'static/textures/environmentMap/pz.jpg',
-    'static/textures/environmentMap/nz.jpg'
+    `${base_url}static/textures/environmentMap/px.jpg`,
+    `${base_url}static/textures/environmentMap/nx.jpg`,
+    `${base_url}static/textures/environmentMap/py.jpg`,
+    `${base_url}static/textures/environmentMap/ny.jpg`,
+    `${base_url}static/textures/environmentMap/pz.jpg`,
+    `${base_url}static/textures/environmentMap/nz.jpg`
 ])
 
 environmentMap.encoding = THREE.sRGBEncoding
@@ -63,19 +65,17 @@ gui.add(debugObject, 'envMapIntensity').min(0).max(4).step(0.001).onChange(updat
  */
 let foxMixer = null
 
-// NEW — Activity 4.3 animation system
+// Animation
 let fox_actions = {}
 let fox_current_action = null
 
 gltfLoader.load(
-    'static/models/Fox/glTF/Fox.gltf',
+    `${base_url}static/models/Fox/glTF/Fox.gltf`,
     (gltf) =>
     {
-        // Model
         gltf.scene.scale.set(0.02, 0.02, 0.02)
         scene.add(gltf.scene)
 
-        // Animation
         foxMixer = new THREE.AnimationMixer(gltf.scene)
 
         fox_actions.idle = foxMixer.clipAction(gltf.animations[0])
@@ -85,7 +85,6 @@ gltfLoader.load(
         fox_current_action = fox_actions.idle
         fox_current_action.play()
 
-        // NEW — Activity 4.3 animation play method
         const animation_play = (name) =>
         {
             const new_action = fox_actions[name]
@@ -100,7 +99,6 @@ gltfLoader.load(
             }
         }
 
-        // NEW — Debug animation controls
         debugObject.play_idle = () => { animation_play('idle') }
         debugObject.play_walking = () => { animation_play('walking') }
         debugObject.play_running = () => { animation_play('running') }
@@ -110,7 +108,6 @@ gltfLoader.load(
         fox_debug_folder.add(debugObject, 'play_walking')
         fox_debug_folder.add(debugObject, 'play_running')
 
-        // Update materials
         updateAllMaterials()
     }
 )
@@ -118,13 +115,13 @@ gltfLoader.load(
 /**
  * Floor
  */
-const floorColorTexture = textureLoader.load('textures/dirt/color.jpg')
+const floorColorTexture = textureLoader.load(`${base_url}textures/dirt/color.jpg`)
 floorColorTexture.encoding = THREE.sRGBEncoding
 floorColorTexture.repeat.set(1.5, 1.5)
 floorColorTexture.wrapS = THREE.RepeatWrapping
 floorColorTexture.wrapT = THREE.RepeatWrapping
 
-const floorNormalTexture = textureLoader.load('textures/dirt/normal.jpg')
+const floorNormalTexture = textureLoader.load(`${base_url}textures/dirt/normal.jpg`)
 floorNormalTexture.repeat.set(1.5, 1.5)
 floorNormalTexture.wrapS = THREE.RepeatWrapping
 floorNormalTexture.wrapT = THREE.RepeatWrapping
